@@ -1,0 +1,46 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #333;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+}
+
+.navbar button {
+    background: none;
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 0 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* TODO: define buttons with class="run"*/
+
+.navbar button:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.content {
+    margin-top: 60px;
+    /* Adjust based on navbar height */
+    text-align: center;
+    font-size: 24px;
+}

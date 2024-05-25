@@ -1,0 +1,16 @@
+<!--Content of the "Run window", it will be dynamically loaded-->
+
+<h1>Run Timer</h1>
+<div id="timer-details">
+    <!-- Timer details will be displayed here -->
+</div>
+<button onclick="window.selectedTimer.start()">Start</button>
+<button onclick="window.selectedTimer.stop()">Stop</button>
+<button onclick="window.selectedTimer.moveBackward(10)">Back</button>
+<button onclick="window.selectedTimer.moveForward(10)">Forward</button>
+<!-- I could also do 
+
+<button class="run.forward" onclick="moveForward()">Forward</button>
+
+but I need 
+-->
