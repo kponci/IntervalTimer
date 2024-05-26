@@ -38,9 +38,43 @@ body {
     color: black;
 }
 
-.content {
+/* .content {
     margin-top: 60px;
-    /* Adjust based on navbar height */
     text-align: center;
     font-size: 24px;
+} */
+
+#timer-details {
+    text-align: center;
+    margin: 20px;
+}
+
+#button-container {
+    position: fixed; 
+    left: 1vw;
+    right: 1vw;
+    bottom: 1vw;
+    display: flex;
+}
+
+button.run {
+    flex: 1;
+    padding: 3vw;
+    border: 2px solid black;
+    background-color: lightgray;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.1s ease;
+}
+
+button.run:hover {
+    background-color: gray;
+}
+
+button.run:active {
+    background-color: darkgray;
+}
+
+button.run:not(:last-child) {
+    border-right: none; /* Remove the border between buttons */
 }

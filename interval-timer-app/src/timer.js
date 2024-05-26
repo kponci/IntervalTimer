@@ -1,20 +1,36 @@
+
+
 export class Timer {
-    constructor(name, duration) {
+    constructor(name, intervals) {
         this.name = name;
-        this.duration = duration; // in seconds
+        this.intervals = intervals; // Array of { name: string, duration: number }
+        this.currentIntervalIndex = 0;
         this.elapsed = 0;
+        this.interval = null;
     }
 
-    start() {
-        if (this.interval) return;
+    // run tab helper functions
+    run(updateDisplayCallback) {
+        if (this.isRunning()) {
+            console.log("ERROR: Timer is already running. Stop it first.");
+            return;
+        }
         this.interval = setInterval(() => {
-            if (this.elapsed < this.duration) {
+            if (this.elapsed < this.getCurrentInterval().duration) {
                 this.elapsed += 1;
-                this.updateDisplay();
+                updateDisplayCallback(this);
             } else {
-                this.stop();
+                this.nextInterval(updateDisplayCallback);
             }
         }, 1000);
+    }
+
+    isRunning(){
+        return this.interval !== null;
+    }
+
+    isFinished(){
+        return this.currentIntervalIndex === this.intervals.length - 1 && this.elapsed === this.getCurrentInterval().duration;
     }
 
     pause() {
@@ -22,35 +38,81 @@ export class Timer {
         this.interval = null;
     }
 
-    stop() {
+    reset() {
         clearInterval(this.interval);
         this.interval = null;
         this.elapsed = 0;
-        this.updateDisplay();
+        this.currentIntervalIndex = 0;
     }
 
-    updateDisplay() {
-        const timerDisplay = document.getElementById('timer-details');
-        if (timerDisplay) {
-            const remaining = this.duration - this.elapsed;
-            timerDisplay.textContent = `${this.formatTime(this.elapsed)} / ${this.formatTime(this.duration)} (Remaining: ${this.formatTime(remaining)})`;
+    nextInterval(updateDisplayCallback) {
+        if (this.isFinished()) {
+            this.currentIntervalIndex += 1;
+            this.elapsed = 0;
+            updateDisplayCallback(this);
+        } else {
+            this.pause();
         }
-        console.log(this.name, this.formatTime(this.elapsed));
     }
 
-    formatTime(seconds) {
-        const mins = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    getCurrentInterval() {
+        return this.intervals[this.currentIntervalIndex];
     }
 
-    moveForward(seconds) {
-        this.elapsed = Math.min(this.elapsed + seconds, this.duration);
-        this.updateDisplay();
+    timeForward(seconds) {
+        const currentInterval = this.getCurrentInterval();
+        if (this.elapsed + seconds >= currentInterval.duration) {
+            if (this.currentIntervalIndex < this.intervals.length - 1) {
+                this.elapsed = this.elapsed + seconds - currentInterval.duration;
+                this.currentIntervalIndex += 1;
+            } else {
+                this.elapsed = currentInterval.duration;
+            }
+        } else {
+            this.elapsed += seconds;
+        }
     }
 
-    moveBackward(seconds) {
-        this.elapsed = Math.max(this.elapsed - seconds, 0);
-        this.updateDisplay();
+    timeBackward(seconds) {
+        if (this.elapsed - seconds < 0) {
+            if (this.currentIntervalIndex > 0) {
+                this.currentIntervalIndex -= 1;
+                const previousInterval = this.getCurrentInterval();
+                this.elapsed = previousInterval.duration + (this.elapsed - seconds);
+            } else {
+                this.elapsed = 0;
+            }
+        } else {
+            this.elapsed -= seconds;
+        }
+    }
+
+    intervalForward() {
+        if (this.currentIntervalIndex < this.intervals.length - 1) {
+            this.currentIntervalIndex += 1;
+            this.elapsed = 0;
+        }
+    }
+
+    intervalBackward() {
+        if (this.currentIntervalIndex > 0) {
+            this.currentIntervalIndex -= 1;
+            this.elapsed = 0;
+        }
+    }
+
+    // edit tab helper functions
+    addBasicTimer(name, duration) {
+        this.intervals.push({ name, duration });
+    }
+
+    moveBasicTimer(from, to){
+        if(from < 0 || from >= this.intervals.length || to < 0 || to >= this.intervals.length){
+            console.log("ERROR: Invalid index: " + from + " or " + to);
+            return;
+        }
+        const temp = this.intervals[from];
+        this.intervals[from] = this.intervals[to];
+        this.intervals[to] = temp;
     }
 }

@@ -1,16 +1,15 @@
 <!--Content of the "Run window", it will be dynamically loaded-->
-
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <h1>Run Timer</h1>
 <div id="timer-details">
     <!-- Timer details will be displayed here -->
 </div>
-<button onclick="window.selectedTimer.start()">Start</button>
-<button onclick="window.selectedTimer.stop()">Stop</button>
-<button onclick="window.selectedTimer.moveBackward(10)">Back</button>
-<button onclick="window.selectedTimer.moveForward(10)">Forward</button>
-<!-- I could also do 
-
-<button class="run.forward" onclick="moveForward()">Forward</button>
-
-but I need 
--->
+<div id="button-container">
+    <button class="run" id="startPauseButton"><i class="material-icons">play_arrow</i></button>
+    <button class="run" id="resetButton"><i class="material-icons">stop</i></button>
+    <button class="run" id="timeBackButton"><i class="material-icons">fast_rewind</i></button>
+    <button class="run" id="timeForthButton"><i class="material-icons">fast_forward</i></button>
+    <button class="run" id="intervalBackButton"><i class="material-icons">skip_previous</i></button>
+    <button class="run" id="intervalForthButton"><i class="material-icons">skip_next</i></button>
+</div>
+<script type="module" src="../src/run.js"></script>
