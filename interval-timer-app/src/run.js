@@ -2,7 +2,7 @@
 
 function getTimerWithDisplay() {
     const timer = window.selectedTimer;
-    const timerDisplay = document.getElementById('timer-details');
+    const timerDisplay = document.getElementById('run-timer-details');
     if (timerDisplay == null) {
         console.log("ERROR: Timer display not found")
         return [null, null];
@@ -20,15 +20,27 @@ function formatTime(seconds) {
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
 }
 
+function addInfo(infoName, infoValue) {
+    return `<div class="timer-info">
+        <div>${infoName}:</div>
+        <div>${infoValue}</div>
+      </div>`;
+}
+
 function updateDisplay() {
     const [timer, timerDisplay] = getTimerWithDisplay();
     const currentInterval = timer.getCurrentInterval();
     const remaining = currentInterval.duration - timer.elapsed;
     timerDisplay.innerHTML = `
-      <p>${currentInterval.name}</p>
-      <p>Elapsed: ${formatTime(timer.elapsed)}</p>
-      <p>Total Duration: ${formatTime(currentInterval.duration)}</p>
-      <p>Remaining: ${formatTime(remaining)}</p>
+      <h1>${timer.name}</h1>
+      ${addInfo('Current Interval', currentInterval.name)}
+      ${addInfo('Duration', formatTime(currentInterval.duration))}
+      ${addInfo('Remaining time', formatTime(remaining))}
+      ${addInfo('Elapsed time', formatTime(timer.elapsed))}
+      ${addInfo('Previous Interval', timer.getPreviousIntervalName())}
+      ${addInfo('Next Interval', timer.getNextIntervalName())}
+      ${addInfo('Total Remaining time', formatTime(timer.getTotalRemaining()))}
+      ${addInfo('Total Elapsed time', formatTime(timer.getTotalElapsed()))}
     `;
 }
 

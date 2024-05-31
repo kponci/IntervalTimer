@@ -6,6 +6,7 @@ body {
     justify-content: center;
     height: 100vh;
     margin: 0;
+    background-color: #ccc;
 }
 
 .navbar {
@@ -15,7 +16,7 @@ body {
     background-color: #333;
     display: flex;
     justify-content: space-around;
-    padding: 10px 0;
+    padding-top: 10px;
 }
 
 .navbar button {
@@ -23,28 +24,45 @@ body {
     color: white;
     border: none;
     padding: 14px 20px;
-    text-align: center;
-    text-decoration: none;
+    margin-top: 10px;
+    flex: 1;
     font-size: 16px;
-    margin: 0 4px;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+
+.navbar button.active {
+    background-color: #ccc;
+    color: black;
+}
+
+.navbar button:is(:first-child) {
+    margin-left: 10px;   
+}
+.navbar button:is(:last-child) {
+    margin-right: 10px;   
 }
 
 /* TODO: define buttons with class="run"*/
 
 .navbar button:hover {
-    background-color: #ddd;
+    background-color: #999;
     color: black;
 }
 
-/* .content {
+.content {
+    width: calc(90%);
+    flex-direction: row;
+    flex: 1;
+    max-width: 1000px;
     margin-top: 60px;
     text-align: center;
     font-size: 24px;
-} */
+}
 
-#timer-details {
+
+/* RUN page */
+#run-timer-details {
     text-align: center;
     margin: 20px;
 }
@@ -61,7 +79,7 @@ button.run {
     flex: 1;
     padding: 3vw;
     border: 2px solid black;
-    background-color: lightgray;
+    background-color: white;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.1s ease;
@@ -78,3 +96,23 @@ button.run:active {
 button.run:not(:last-child) {
     border-right: none; /* Remove the border between buttons */
 }
+
+.timer-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* EDIT page */
+.draggable {
+    padding: 1rem;
+    background-color: white;
+    border: 1px solid black;
+    cursor: move;
+  }
+  
+  .draggable.dragging {
+    opacity: .5;
+  }

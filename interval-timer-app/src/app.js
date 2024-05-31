@@ -1,5 +1,6 @@
 import { Timer } from './timer.js';
 import { initializeRunPage } from './run.js';
+import { initializeEditPage } from './edit.js';
 
 let selectedTimer = new Timer(
     "Timer 1",
@@ -12,7 +13,19 @@ let selectedTimer = new Timer(
 let timers = [selectedTimer];
 
 
+function updateNavbar(page) {
+    const navbarButtons = document.querySelectorAll('.navbar button');
+    navbarButtons.forEach(button => {
+        if (button.id == `${page}-nav`) {
+            button.classList.add('active');
+        } else {
+            button.classList.remove('active');
+        }
+    });
+}
+
 function showPage(page) {
+    updateNavbar(page);
     const content = document.getElementById('content');
     content.innerHTML = '';
     fetch(`../public/pages/${page}.html`)
@@ -21,11 +34,16 @@ function showPage(page) {
             const scriptEl = document.createRange().createContextualFragment(html);
             content.append(scriptEl)
             // content.innerHTML = html;
+            // Dynamically load and execute run.js
             if (page === 'run') {
-                // Dynamically load and execute run.js
                 initializeRunPage();
             }
-            // Add similar initialization for 'edit' and 'others' if needed
+            else if (page === 'edit') {
+                initializeEditPage();
+            }
+            // else if (page === 'others') {
+            //     initializeEothersPage();
+            // }
         })
         .catch(err => console.warn('Error loading page:', err));
 }

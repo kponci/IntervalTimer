@@ -11,18 +11,18 @@
 
 <body>
     <nav class="navbar">
-        <button onclick="showPage('run')">Run</button>
-        <button onclick="showPage('edit')">Edit</button>
-        <button onclick="showPage('others')">Others</button>
+        <button id="run-nav" onclick="showPage('run')">Run</button>
+        <button id="edit-nav" onclick="showPage('edit')">Edit</button>
+        <button id="others-nav" onclick="showPage('others')">Others</button>
     </nav>
     <div id="content" class="content">
-        <!-- Dynamic content will be injected here -->
         <!-- Show initial page -->
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 showPage('run');
             });
         </script>
+        <!-- Dynamic content will be injected here -->
     </div>
 </body>
 

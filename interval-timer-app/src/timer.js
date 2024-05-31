@@ -1,5 +1,3 @@
-
-
 export class Timer {
     constructor(name, intervals) {
         this.name = name;
@@ -53,6 +51,38 @@ export class Timer {
         } else {
             this.pause();
         }
+    }
+
+    getNextIntervalName() {
+        if (this.currentIntervalIndex < this.intervals.length - 1) {
+            return this.intervals[this.currentIntervalIndex + 1].name;
+        } else {
+            return "Finished";
+        }
+    }
+
+    getPreviousIntervalName() {
+        if (this.currentIntervalIndex > 0) {
+            return this.intervals[this.currentIntervalIndex - 1].name;
+        } else {
+            return "null";
+        }
+    }
+
+    getTotalElapsed() {
+        let total = 0;
+        for (let i = 0; i < this.currentIntervalIndex; i++) {
+            total += this.intervals[i].duration;
+        }
+        return total + this.elapsed;
+    }
+
+    getTotalRemaining() {
+        let total = 0;
+        for (let i = this.currentIntervalIndex; i < this.intervals.length; i++) {
+            total += this.intervals[i].duration;
+        }
+        return total - this.elapsed;
     }
 
     getCurrentInterval() {
