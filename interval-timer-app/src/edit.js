@@ -16,6 +16,30 @@ export function initializeEditPage() {
         selectedTimer.addBasicTimer(newBasicTimer);
         addTimerElement(container, newTimer, timers.length - 1);
     });
+
+
+    const draggables = document.querySelectorAll('.draggable');
+
+    draggables.forEach(draggable => {
+        draggable.addEventListener('dragstart', () => {
+            draggable.classList.add('dragging');
+        })
+
+        draggable.addEventListener('dragend', () => {
+            draggable.classList.remove('dragging');
+        })
+    })
+
+    container.addEventListener('dragover', e => {
+        e.preventDefault()
+        const afterElement = getDragAfterElement(container, e.clientY);
+        const draggable = document.querySelector('.dragging');
+        if (afterElement == null) {
+            container.appendChild(draggable);
+        } else {
+            container.insertBefore(draggable, afterElement);
+        }
+    });
 }
 
 function setBasicTimerName(event, index) {
@@ -28,7 +52,7 @@ function setBasicTimerDuration(event, index) {
 
 function addTimerElement(container, timer, index) {
     const timerDiv = document.createElement('div');
-    timerDiv.className = 'timer';
+    timerDiv.className = 'draggable';
     timerDiv.draggable = true;
     timerDiv.dataset.index = index;
     console.log("index: " + index);
@@ -45,10 +69,6 @@ function addTimerElement(container, timer, index) {
     `;
 
     container.appendChild(timerDiv);
-
-    timerDiv.addEventListener('dragstart', handleDragStart);
-    timerDiv.addEventListener('dragover', handleDragOver);
-    timerDiv.addEventListener('drop', handleDrop);
 }
 
 function removeTimer(index) {
@@ -56,24 +76,18 @@ function removeTimer(index) {
     initializeEditPage();
 }
 
-function handleDragStart(event) {
-    event.dataTransfer.setData('text/plain', event.target.dataset.index);
-}
+function getDragAfterElement(container, y) {
+    const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
 
-function handleDragOver(event) {
-    event.preventDefault();
-}
-
-function handleDrop(event) {
-    event.preventDefault();
-    const draggedIndex = event.dataTransfer.getData('text/plain');
-    const targetIndex = event.target.closest('.timer').dataset.index;
-
-    if (draggedIndex !== targetIndex) {
-        console.log("draggedIndex: " + draggedIndex + " targetIndex: " + targetIndex);
-        selectedTimer.moveBasicTimer(draggedIndex, targetIndex);
-        initializeEditPage();
-    }
+    return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect()
+        const offset = y - box.top - box.height / 2
+        if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child }
+        } else {
+            return closest
+        }
+    }, { offset: Number.NEGATIVE_INFINITY }).element
 }
 
 window.initializeEditPage = initializeEditPage;
