@@ -2,7 +2,7 @@ import { Timer } from './timer.js';
 import { initializeRunPage } from './run.js';
 import { initializeEditPage } from './edit.js';
 
-let selectedTimer = new Timer(
+let selectedIntervalTimer = new Timer(
     "Timer 1",
     [
         { name: 'Warm-up', duration: 60 },
@@ -10,7 +10,7 @@ let selectedTimer = new Timer(
         { name: 'Rest', duration: 30 }
     ]
 );
-let timers = [selectedTimer];
+let timers = [selectedIntervalTimer];
 
 
 function updateNavbar(page) {
@@ -26,7 +26,7 @@ function updateNavbar(page) {
 
 function showPage(page) {
     updateNavbar(page);
-    const content = document.getElementById('content');
+    const content = document.getElementById('main-body-content');
     content.innerHTML = '';
     fetch(`../public/pages/${page}.html`)
         .then(response => response.text())
@@ -49,5 +49,5 @@ function showPage(page) {
 }
 
 window.showPage = showPage;
-window.selectedTimer = selectedTimer;
+window.selectedIntervalTimer = selectedIntervalTimer;
 window.timers = timers;

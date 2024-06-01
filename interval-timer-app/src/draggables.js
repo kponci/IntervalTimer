@@ -1,15 +1,3 @@
-// Using a recursive function to print the nested object
-function printNestedObject(obj, indent = 0) {
-    for (let key in obj) {
-        if (typeof obj[key] === 'object') {
-            console.log(`${' '.repeat(indent)}${key}:`);
-            printNestedObject(obj[key], indent + 4);
-        } else {
-            console.log(`${' '.repeat(indent)}${key}: ${obj[key]}`);
-        }
-    }
-}
-
 export default function setDraggables(container, draggables, list2change) {
     draggables.forEach(draggable => {
         draggable.addEventListener('dragstart', () => {
@@ -17,15 +5,13 @@ export default function setDraggables(container, draggables, list2change) {
         })
 
         draggable.addEventListener('dragend', () => {
-            printNestedObject(list2change);
             draggable.classList.remove('dragging');
-
             updateListOrder(container, list2change);
         })
     })
 
     container.addEventListener('dragover', e => {
-        e.preventDefault()
+        e.preventDefault();
         const afterElement = getDragAfterElement(container, e.clientY);
         const draggable = document.querySelector('.dragging');
         if (afterElement == null) {
@@ -50,14 +36,30 @@ function getDragAfterElement(container, y) {
     }, { offset: Number.NEGATIVE_INFINITY }).element
 }
 
-function updateListOrder(container, list2change) {
+function updateListOrder(container, changedList) {
     const elements = [...container.querySelectorAll('.draggable')];
     const newOrder = elements.map(element => parseInt(element.dataset.index, 10));
 
     // Reorder the list based on the new indices
-    const reorderedList = newOrder.map(index => list2change[index]);
+    const reorderedList = newOrder.map(index => changedList[index]);
 
     // Update the original list with the reordered list by reassigning the array
-    list2change.length = 0;
-    list2change.push(...reorderedList);
+    changedList.length = 0;
+    changedList.push(...reorderedList);
+}
+
+// New function to delete a draggable element at a given index
+export function deleteDraggableElement(container, list2change, idx) {
+    const element = container.querySelector(`.draggable[data-index="${idx}"]`);
+    if (element) {
+        container.removeChild(element);
+        list2change.splice(idx, 1);
+
+        // Reassign data indices to remaining elements
+        [...container.querySelectorAll('.draggable')].forEach((el, newIndex) => {
+            el.dataset.index = newIndex;
+        });
+
+        updateListOrder(container, list2change);
+    }
 }

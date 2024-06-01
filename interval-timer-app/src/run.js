@@ -1,7 +1,7 @@
 // src/run.js
 
 function getTimerWithDisplay() {
-    const timer = window.selectedTimer;
+    const timer = window.selectedIntervalTimer;
     const timerDisplay = document.getElementById('run-timer-details');
     if (timerDisplay == null) {
         console.log("ERROR: Timer display not found")
@@ -87,6 +87,8 @@ function resetButtonHandler() {
 }
 
 export function initializeRunPage() {
+    console.log("selectedTimer: " + JSON.stringify(window.selectedIntervalTimer));
+
     updateDisplay(); // Initial display update
     document.getElementById('startPauseButton').addEventListener('click', startPauseButtonHandler);
     document.getElementById('timeForthButton').addEventListener('click', timeForthButtonHandler);

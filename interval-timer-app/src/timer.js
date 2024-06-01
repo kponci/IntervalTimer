@@ -54,10 +54,13 @@ export class Timer {
     }
 
     getNextIntervalName() {
+        console.log("this.currentIntervalIndex: " + this.currentIntervalIndex);
+        console.log("this.intervals.length: " + this.intervals.length);
+        console.log("this.intervals[currentIntervalIndex]: " + this.intervals[this.currentIntervalIndex].name);
         if (this.currentIntervalIndex < this.intervals.length - 1) {
             return this.intervals[this.currentIntervalIndex + 1].name;
         } else {
-            return "Finished";
+            return "null";
         }
     }
 
@@ -132,8 +135,12 @@ export class Timer {
     }
 
     // edit tab helper functions
-    addBasicTimer(name, duration) {
-        this.intervals.push({ name, duration });
+    addBasicTimer(basicTimer) {
+
+    console.log("selectedTimer before push: " + JSON.stringify(window.selectedIntervalTimer));
+        this.intervals.push(basicTimer);
+
+    console.log("selectedTimer after push: " + JSON.stringify(window.selectedIntervalTimer));
     }
 
     moveBasicTimer(from, to){

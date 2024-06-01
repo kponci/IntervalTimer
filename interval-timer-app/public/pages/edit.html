@@ -1,10 +1,12 @@
-<h1>Edit Timer</h1>
-<div>
-    <label for="interval-name">Interval Timer Name:</label>
-    <input type="text" id="interval-name" value="">     <!-- TODO: add event listener to this -->
+<!--Content of the "Edit window", it will be dynamically loaded-->
+<div id="edit-tab">
+    <div>
+        <label for="interval-name">Interval Timer Name:</label>
+        <input type="text" id="interval-name" value=""> <!-- TODO: add event listener to this -->
+    </div>
+    <div id="timers-container">
+        <!-- Basic timers will be dynamically added here -->
+    </div>
+    <button id="add-basic-timer" class="add-btn material-icons">add_circle_outline</button>
+    <script type="module" src="../src/edit.js"></script>
 </div>
-<div id="timers-container" class="container">
-    <!-- Basic timers will be dynamically added here -->
-</div>
-<button id="add-timer">Add Timer</button>
-<script type="module" src="../src/edit.js"></script>

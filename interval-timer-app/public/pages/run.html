@@ -1,14 +1,16 @@
 <!--Content of the "Run window", it will be dynamically loaded-->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<div id="run-timer-details">
-    <!-- Timer details will be displayed here -->
+<div id="run-tab">
+
+    <div id="run-timer-details">
+        <!-- Timer details will be displayed here -->
+    </div>
+    <div id="button-container">
+        <button id="startPauseButton" class="material-icons">play_arrow</button>
+        <button id="resetButton" class="material-icons">stop</button>
+        <button id="timeBackButton" class="material-icons">fast_rewind</button>
+        <button id="timeForthButton" class="material-icons">fast_forward</button>
+        <button id="intervalBackButton" class="material-icons">skip_previous</button>
+        <button id="intervalForthButton" class="material-icons">skip_next</button>
+    </div>
+    <script type="module" src="../src/run.js"></script>
 </div>
-<div id="button-container">
-    <button class="run" id="startPauseButton"><i class="material-icons">play_arrow</i></button>
-    <button class="run" id="resetButton"><i class="material-icons">stop</i></button>
-    <button class="run" id="timeBackButton"><i class="material-icons">fast_rewind</i></button>
-    <button class="run" id="timeForthButton"><i class="material-icons">fast_forward</i></button>
-    <button class="run" id="intervalBackButton"><i class="material-icons">skip_previous</i></button>
-    <button class="run" id="intervalForthButton"><i class="material-icons">skip_next</i></button>
-</div>
-<script type="module" src="../src/run.js"></script>
