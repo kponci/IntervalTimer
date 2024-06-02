@@ -1,6 +1,7 @@
 import { Timer } from './timer.js';
 import { initializeRunPage } from './run.js';
 import { initializeEditPage } from './edit.js';
+import { initializeOthersPage } from './others.js';
 
 let selectedIntervalTimer = new Timer(
     "Timer 1",
@@ -10,7 +11,7 @@ let selectedIntervalTimer = new Timer(
         { name: 'Rest', duration: 30 }
     ]
 );
-let timers = [selectedIntervalTimer];
+let allIntervalTimers = [selectedIntervalTimer];
 
 
 function updateNavbar(page) {
@@ -41,13 +42,13 @@ function showPage(page) {
             else if (page === 'edit') {
                 initializeEditPage();
             }
-            // else if (page === 'others') {
-            //     initializeEothersPage();
-            // }
+            else if (page === 'others') {
+                initializeOthersPage();
+            }
         })
         .catch(err => console.warn('Error loading page:', err));
 }
 
 window.showPage = showPage;
 window.selectedIntervalTimer = selectedIntervalTimer;
-window.timers = timers;
+window.allIntervalTimers = allIntervalTimers;

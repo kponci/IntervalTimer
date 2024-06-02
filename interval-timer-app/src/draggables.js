@@ -14,13 +14,10 @@ export function setDraggableCanvas(container) {
 
 export function setDraggableElement(container, element, list2change) {
     // element MUST contain button with class drag-btn
-
     const dragButton = element.querySelector('.drag-btn');
     dragButton.addEventListener('dragstart', (event) => {
-        // event.preventDefault();
         console.log("element.outerHTML: " + element.outerHTML);
         element.classList.add('dragging');
-        // event.dataTransfer.setData("text/html", element.outerHTML); // Change "element" to "element.outerHTML"
         const rect = element.getBoundingClientRect();
         const offsetX = event.clientX - rect.left;
         const offsetY = event.clientY - rect.top;
@@ -81,7 +78,7 @@ export function deleteDraggableElement(container, list2change, element) {
             });
 
             // Trigger reflow and apply the transform
-            const reflowElems = [...remainingElements.slice(deletedIdx), document.getElementById('add-basic-timer')];
+            const reflowElems = [...remainingElements.slice(deletedIdx), document.querySelector('.add-btn')];
             reflowElems.forEach((el) => {
                 el.style.transition = 'none'; // Temporarily disable transitions
                 el.style.transform = `translateY(${reflowElems[0].offsetHeight}px)`;

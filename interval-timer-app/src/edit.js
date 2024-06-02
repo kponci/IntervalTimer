@@ -4,7 +4,7 @@ export function initializeEditPage() {
     // change value in interval-name to the selectedIntervalTimer.name   
     document.getElementById('interval-name').value = selectedIntervalTimer.name;
 
-    const basicTimersContainer = document.getElementById('timers-container');
+    const basicTimersContainer = document.querySelector('.timers-container');
     basicTimersContainer.innerHTML = ''; // Clear any existing content
 
     console.log("selectedIntervalTimer.intervals: " + selectedIntervalTimer.intervals);
@@ -13,10 +13,10 @@ export function initializeEditPage() {
         addTimerElement(basicTimersContainer, basicTimerStruct, i);
     }
 
-    const draggables = document.querySelectorAll('.draggable');
+    // const draggables = document.querySelectorAll('.draggable');
     setDraggableCanvas(basicTimersContainer);
 
-    const addBtn = document.getElementById('add-basic-timer');
+    const addBtn = document.querySelector('.add-btn');
     addBtn.addEventListener('mouseover', () => {
         addBtn.textContent = 'add_circle';
     });
@@ -43,7 +43,7 @@ function removeTimer(timerDiv) {
         alert('The interval timer must consist of at least one basic timer.');
         return;
     }
-    deleteDraggableElement(document.getElementById('timers-container'),
+    deleteDraggableElement(document.querySelector('.timers-container'),
         window.selectedIntervalTimer.intervals,
         timerDiv);
 }
