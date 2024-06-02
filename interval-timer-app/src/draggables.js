@@ -17,10 +17,14 @@ export function setDraggableElement(container, element, list2change) {
 
     const dragButton = element.querySelector('.drag-btn');
     dragButton.addEventListener('dragstart', (event) => {
-        event.dataTransfer.setData("plain/text", element);
         // event.preventDefault();
-        console.log("dragstart");
+        console.log("element.outerHTML: " + element.outerHTML);
         element.classList.add('dragging');
+        // event.dataTransfer.setData("text/html", element.outerHTML); // Change "element" to "element.outerHTML"
+        const rect = element.getBoundingClientRect();
+        const offsetX = event.clientX - rect.left;
+        const offsetY = event.clientY - rect.top;
+        event.dataTransfer.setDragImage(element, offsetX, offsetY);
     });
 
     dragButton.addEventListener('dragend', () => {
