@@ -74,6 +74,7 @@ body {
         right: 1vw;
         bottom: 1vw;
         display: flex;
+
         button {
             /* button.run { */
             flex: 1;
@@ -84,19 +85,68 @@ body {
             font-size: 16px;
             transition: background-color 0.1s ease;
         }
+
         button:hover {
             background-color: gray;
         }
+
         button:active {
             background-color: darkgray;
         }
+
         button:not(:last-child) {
             border-right: none;
-            /* Remove the border between buttons */
         }
     }
 
+    .progress-bar {
+        width: 100%;
+        height: 10px;
+        background-color: red;
+        position: relative;
+        overflow: hidden;
+        border-radius: 5px;
+    }
+
+    .progress-bar-green {
+        height: 1rem;
+        background-color: green;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
     .timer-info {
+        padding-top: 1rem;
+        background-color: white;
+        scale: 0.9;
+        border-radius: 0.5rem;
+        border: 1px solid black;
+        transition: opacity 1s ease-out, transform 0.5s ease-in-out;
+    }
+
+    .timer-info.minor {
+        opacity: 0.5;
+        transform: scale(0.7);
+        transform-origin: center center;
+        border-style: dashed;
+    }
+
+    .timer-info.non-existent {
+        opacity: 0.05;
+        transform: scale(0.7);
+        transform-origin: center center;
+        border-style: dashed;
+    }
+
+    .timer-info.interval {
+        font-weight: bold;
+        border: 3px solid greenyellow;
+        transform-origin: center;
+        margin-top: 1rem;
+    }
+
+    .info-elem {
         display: flex;
         justify-content: space-between;
         width: 100%;
@@ -105,63 +155,67 @@ body {
     }
 }
 
-/* EDIT page */
+/* EDIT + OTHERS page */
 /* #edit-tab { */
-    .timers-container {
-        padding: 1rem;
-        /* margin-top: 1rem; */
-    }
-    
-    .basic-timer {
-        padding: 1rem;
-        margin: 1rem;
-        background-color: white;
-        border-radius: 0.5rem;
-        border: 1px solid black;
-        display: flex;
-        justify-content: space-between;
-        transition: opacity 1s ease-out, transform 0.5s ease-in-out;
-    }
+.timers-container {
+    padding: 1rem;
+    /* margin-top: 1rem; */
+}
 
-    .fade-out {
-        opacity: 0;
-        pointer-events: none; /* Prevent interaction during the fade-out */
-    }
+.basic-timer {
+    padding: 1rem;
+    margin: 1rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    transition: opacity 1s ease-out, transform 0.5s ease-in-out;
+}
 
-    .drag-btn {
-        position: relative;
-        border-color: transparent;
-        background-color: transparent;
-        font-size: 25px;
-        cursor: grab;
-    }
-    .drag-btn:hover {
-        font-weight: bolder;
-    }
+.fade-out {
+    opacity: 0;
+    pointer-events: none;
+    /* Prevent interaction during the fade-out */
+}
 
-    .basic-timer:is(:last-child) {
-        margin-bottom: 0;
-    }
-    
-    .basic-timer.dragging {
-        opacity: .5;
-    }
-    
-    .remove-btn {
-        position: relative;
-        border-color: transparent;
-        background-color: transparent;
-        color: red;
-        font-size: 25px;
-        cursor: pointer;
-    }
-    .add-btn {
-        position: relative;
-        border-color: transparent;
-        background-color: transparent;
-        color: green;
-        font-size: 25px;
-        cursor: pointer;
-        transition: transform 0.5s ease-in-out;
-    }
+.drag-btn {
+    position: relative;
+    border-color: transparent;
+    background-color: transparent;
+    font-size: 25px;
+    cursor: grab;
+}
+
+.drag-btn:hover {
+    font-weight: bolder;
+}
+
+.basic-timer:is(:last-child) {
+    margin-bottom: 0;
+}
+
+.basic-timer.dragging {
+    opacity: .5;
+}
+
+.remove-btn {
+    position: relative;
+    border-color: transparent;
+    background-color: transparent;
+    color: red;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.add-btn {
+    position: relative;
+    border-color: transparent;
+    background-color: transparent;
+    color: green;
+    font-size: 25px;
+    cursor: pointer;
+    transition: transform 0.5s ease-in-out;
+}
+
 /* } */

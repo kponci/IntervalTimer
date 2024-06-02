@@ -1,17 +1,17 @@
 // src/run.js
 
 function getTimerWithDisplay() {
-    const timer = window.selectedIntervalTimer;
+    const intervalTimer = window.selectedIntervalTimer;
     const timerDisplay = document.getElementById('run-timer-details');
     if (timerDisplay == null) {
         console.log("ERROR: Timer display not found")
         return [null, null];
     }
-    if (timer == null) {
+    if (intervalTimer == null) {
         console.log("ERROR: Timer not found")
         return [null, null];
     }
-    return [timer, timerDisplay];
+    return [intervalTimer, timerDisplay];
 }
 
 function formatTime(seconds) {
@@ -21,68 +21,136 @@ function formatTime(seconds) {
 }
 
 function addInfo(infoName, infoValue) {
-    return `<div class="timer-info">
+    return `<div class="info-elem">
         <div>${infoName}:</div>
         <div>${infoValue}</div>
       </div>`;
 }
 
+function createProgressBar(greenPart, total) {
+    const redPart = total - greenPart;
+
+    const progressBar = document.createElement('div');
+    progressBar.className = 'progress-bar';
+
+    const greenDiv = document.createElement('div');
+    greenDiv.className = 'progress-bar-green';
+    greenDiv.style.width = `${(greenPart / total) * 100}%`;
+    progressBar.appendChild(greenDiv);
+
+    return progressBar;
+}
+
+function showBasicTimerStats(basicTimerId, isMinor) {
+    const intervalTimer = window.selectedIntervalTimer;
+    if (basicTimerId < 0 || basicTimerId >= intervalTimer.intervals.length) {
+        return `<div class="timer-info non-existent">
+        Placeholder
+        ${addInfo(" ", " ")}
+        ${addInfo(" ", " ")}
+        ${addInfo(" ", " ")}
+        ${createProgressBar(basicTimerId > 0 ? 0 : 100, 100).outerHTML}
+      </div>`;
+    }
+
+    const basicTimer = intervalTimer.intervals[basicTimerId];
+    let elapsedTime = 0;
+    if (intervalTimer.currentIntervalIndex < basicTimerId) {
+        elapsedTime = 0;
+    }
+    else if (intervalTimer.currentIntervalIndex == basicTimerId) {
+        elapsedTime = intervalTimer.elapsed;
+    }
+    else {
+        elapsedTime = basicTimer.duration;
+    }
+    const remainingTime = basicTimer.duration - elapsedTime;
+
+    return `<div class="timer-info ${isMinor ? 'minor' : ''}">
+        <b>${basicTimer.name}</b>
+        ${addInfo("Remaining", formatTime(remainingTime))}
+        ${addInfo("Elapsed", formatTime(elapsedTime))}
+        ${addInfo("Duration", formatTime(basicTimer.duration))}
+        ${createProgressBar(elapsedTime, basicTimer.duration).outerHTML}
+      </div>`;
+}
+
+function showIntervalTimerStats() {
+    const intervalTimer = window.selectedIntervalTimer;
+    const totalRemaining = intervalTimer.getTotalRemaining();
+    const totalElapsed = intervalTimer.getTotalElapsed();
+    const totalTime = totalRemaining + totalElapsed;
+
+    // const progressBarWithPercentage = createProgressBar(totalElapsed, totalTime).outerHTML};
+    // const percentage = `<div>${Math.floor(totalElapsed / totalTime * 100)}%</div>`;
+
+
+    return `<div class="timer-info interval">
+        ${addInfo("Total Remaining", formatTime(totalRemaining))}
+        ${addInfo("Total Elapsed", formatTime(totalElapsed))}
+        ${addInfo("Total Duration", formatTime(totalTime))}
+        ${addInfo("Percentage", `${Math.floor(totalElapsed / totalTime * 100)}%`)}
+        ${createProgressBar(totalElapsed, totalTime).outerHTML}
+      </div>`;
+}
+
 function updateDisplay() {
-    const [timer, timerDisplay] = getTimerWithDisplay();
-    const currentInterval = timer.getCurrentInterval();
-    const remaining = currentInterval.duration - timer.elapsed;
-    timerDisplay.innerHTML = `
-      <h1>${timer.name}</h1>
-      ${addInfo('Current Interval', currentInterval.name)}
-      ${addInfo('Duration', formatTime(currentInterval.duration))}
-      ${addInfo('Remaining time', formatTime(remaining))}
-      ${addInfo('Elapsed time', formatTime(timer.elapsed))}
-      ${addInfo('Previous Interval', timer.getPreviousIntervalName())}
-      ${addInfo('Next Interval', timer.getNextIntervalName())}
-      ${addInfo('Total Remaining time', formatTime(timer.getTotalRemaining()))}
-      ${addInfo('Total Elapsed time', formatTime(timer.getTotalElapsed()))}
-    `;
+    const [intervalTimer, timerDisplay] = getTimerWithDisplay();
+    const currentInterval = intervalTimer.getCurrentInterval();
+    const remaining = currentInterval.duration - intervalTimer.elapsed;
+
+    const prevTimerDiv = showBasicTimerStats(intervalTimer.currentIntervalIndex - 1, true);
+    const currTimerDiv = showBasicTimerStats(intervalTimer.currentIntervalIndex, false);
+    const nextTimerDiv = showBasicTimerStats(intervalTimer.currentIntervalIndex + 1, true);
+
+    const intervalTimerDiv = showIntervalTimerStats();
+
+    timerDisplay.innerHTML = `<h1>${intervalTimer.name}</h1>`
+        + prevTimerDiv
+        + currTimerDiv
+        + nextTimerDiv
+        + intervalTimerDiv;
 }
 
 function startPauseButtonHandler() {
-    const [timer, timerDisplay] = getTimerWithDisplay();
+    const [intervalTimer, timerDisplay] = getTimerWithDisplay();
     const startOrPauseButton = document.getElementById('startPauseButton');
-    if (timer.isRunning()) {
-        timer.pause();
+    if (intervalTimer.isRunning()) {
+        intervalTimer.pause();
         startOrPauseButton.innerHTML = '<i class="material-icons">play_arrow</i>';
     } else {
-        timer.run(updateDisplay);
+        intervalTimer.run(updateDisplay);
         startOrPauseButton.innerHTML = '<i class="material-icons">pause</i>';
     }
 }
 
 function timeForthButtonHandler() {
-    const [timer, timerDisplay] = getTimerWithDisplay();
-    timer.timeForward(10);
+    const [intervalTimer, timerDisplay] = getTimerWithDisplay();
+    intervalTimer.timeForward(10);
     updateDisplay();
 }
 
 function timeBackButtonHandler() {
-    const [timer, timerDisplay] = getTimerWithDisplay();
-    timer.timeBackward(10);
+    const [intervalTimer, timerDisplay] = getTimerWithDisplay();
+    intervalTimer.timeBackward(10);
     updateDisplay();
 }
 
 function intervalForthButtonHandler() {
-    const [timer, timerDisplay] = getTimerWithDisplay();
-    timer.intervalForward();
+    const [intervalTimer, timerDisplay] = getTimerWithDisplay();
+    intervalTimer.intervalForward();
     updateDisplay();
 }
 
 function intervalBackButtonHandler() {
-    const [timer, timerDisplay] = getTimerWithDisplay();
-    timer.intervalBackward();
+    const [intervalTimer, timerDisplay] = getTimerWithDisplay();
+    intervalTimer.intervalBackward();
     updateDisplay();
 }
 
 function resetButtonHandler() {
-    const [timer, timerDisplay] = getTimerWithDisplay();
-    timer.reset();
+    const [intervalTimer, timerDisplay] = getTimerWithDisplay();
+    intervalTimer.reset();
     updateDisplay();
 }
 

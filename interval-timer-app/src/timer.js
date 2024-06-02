@@ -17,7 +17,9 @@ export class Timer {
             if (this.elapsed < this.getCurrentInterval().duration) {
                 this.elapsed += 1;
                 updateDisplayCallback(this);
+                console.log("this.elapsed: " + this.elapsed);
             } else {
+                console.log("switching to next interval");
                 this.nextInterval(updateDisplayCallback);
             }
         }, 1000);
@@ -45,11 +47,11 @@ export class Timer {
 
     nextInterval(updateDisplayCallback) {
         if (this.isFinished()) {
+            this.pause();
+        } else {
             this.currentIntervalIndex += 1;
             this.elapsed = 0;
             updateDisplayCallback(this);
-        } else {
-            this.pause();
         }
     }
 
