@@ -4,7 +4,7 @@ import { initializeEditPage } from './edit.js';
 import { initializeOthersPage } from './others.js';
 
 let selectedIntervalTimer = new Timer(
-    "Timer 1",
+    "Sample timer",
     [
         { name: 'Warm-up', duration: 60 },
         { name: 'Exercise', duration: 120 },

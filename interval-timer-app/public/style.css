@@ -29,10 +29,11 @@ body {
         cursor: pointer;
         transition: background-color 0.3s;
 
-        .active {
-            background-color: #ccc;
-            color: black;
-        }
+    }
+
+    button.active {
+        background-color: #ccc;
+        color: black;
     }
 
     button:is(:first-child) {

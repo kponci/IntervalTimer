@@ -26,14 +26,6 @@ export function initializeOthersPage() {
     });
 }
 
-// function setBasicTimerName(event, index) {
-//     selectedIntervalTimer.intervals[index].name = event.target.value;
-// }
-
-// function setBasicTimerDuration(event, index) {
-//     selectedIntervalTimer.intervals[index].duration = parseInt(event.target.value);
-// }
-
 function removeTimer(timerDiv) {
     if (allIntervalTimers.length <= 1) {
         alert('There needs to be at least one interval timer present.');

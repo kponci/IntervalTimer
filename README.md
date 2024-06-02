@@ -13,15 +13,6 @@ On the Others page, all other interval timers that the user has created will be 
 
 ## TODO
 ### Run tab
-1. Extend basic timer to Interval timer, give it field Name
-2. Add name to each basic timer
-3. Show name current name of the basic timer instead of Run timer header
-4. Style the buttons Play/Stop, Move forward/backward 10 seconds, Move 1 basic timer back/forth
-5. Implement behavior of the buttons
+- 
 
 ### Edit tab
-1. show each basic timer name together with the time in a column
-2. implement changing of the name of the basic timers (reusage in **Others** tab)
-3. implement changing of the time of the basic timers
-4. implement adding of the basic timers - add a new field in the column (reusage in **Others** tab)
-5. implement moving the timers drag-n-drop style
