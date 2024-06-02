@@ -56,28 +56,19 @@ function updateListOrder(container, changedList) {
     changedList.push(...reorderedList);
 }
 
-function smoothMoveElement(el, offset) {
-    el.style.transition = 'none'; // Temporarily disable transitions
-    el.style.transform = `translateY(${offset}px)`;
-    requestAnimationFrame(() => {
-        el.style.transition = ''; // Re-enable transitions
-        el.style.transform = '';
-    });
-}
-
 export function deleteDraggableElement(container, list2change, element) {
     // const element = container.querySelector(`.draggable[data-index="${idx}"]`);
     if (!container.contains(element)) {
         console.error('Element does not exist in the container.');
         return;
     }
-    const idx = Array.from(container.children).indexOf(element);
+    const deletedIdx = Array.from(container.children).indexOf(element);
     if (element) {
         element.classList.add('fade-out');
 
         setTimeout(() => {
             container.removeChild(element);
-            list2change.splice(idx, 1);
+            list2change.splice(deletedIdx, 1);
 
             // Reassign data indices to remaining elements
             const remainingElements = [...container.querySelectorAll('.draggable')];
@@ -86,13 +77,16 @@ export function deleteDraggableElement(container, list2change, element) {
             });
 
             // Trigger reflow and apply the transform
-            for (let newIndex = idx; newIndex < remainingElements.length; newIndex++) {
-                const el = remainingElements[newIndex];
-                smoothMoveElement(el, el.offsetHeight);
-            }
-            const addBtn = document.getElementById('add-basic-timer');
-            smoothMoveElement(addBtn, remainingElements[0].offsetHeight);
-            
+            const reflowElems = [...remainingElements.slice(deletedIdx), document.getElementById('add-basic-timer')];
+            reflowElems.forEach((el) => {
+                el.style.transition = 'none'; // Temporarily disable transitions
+                el.style.transform = `translateY(${reflowElems[0].offsetHeight}px)`;
+                requestAnimationFrame(() => {
+                    el.style.transition = ''; // Re-enable transitions
+                    el.style.transform = '';
+                });
+            });
+
             updateListOrder(container, list2change);
         }, 500);
     }
