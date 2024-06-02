@@ -161,5 +161,6 @@ body {
         color: green;
         font-size: 25px;
         cursor: pointer;
+        transition: transform 0.5s ease-in-out;
     }
 }

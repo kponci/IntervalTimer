@@ -56,18 +56,44 @@ function updateListOrder(container, changedList) {
     changedList.push(...reorderedList);
 }
 
-// New function to delete a draggable element at a given index
-export function deleteDraggableElement(container, list2change, idx) {
-    const element = container.querySelector(`.draggable[data-index="${idx}"]`);
+function smoothMoveElement(el, offset) {
+    el.style.transition = 'none'; // Temporarily disable transitions
+    el.style.transform = `translateY(${offset}px)`;
+    requestAnimationFrame(() => {
+        el.style.transition = ''; // Re-enable transitions
+        el.style.transform = '';
+    });
+}
+
+export function deleteDraggableElement(container, list2change, element) {
+    // const element = container.querySelector(`.draggable[data-index="${idx}"]`);
+    if (!container.contains(element)) {
+        console.error('Element does not exist in the container.');
+        return;
+    }
+    const idx = Array.from(container.children).indexOf(element);
     if (element) {
-        container.removeChild(element);
-        list2change.splice(idx, 1);
+        element.classList.add('fade-out');
 
-        // Reassign data indices to remaining elements
-        [...container.querySelectorAll('.draggable')].forEach((el, newIndex) => {
-            el.dataset.index = newIndex;
-        });
+        setTimeout(() => {
+            container.removeChild(element);
+            list2change.splice(idx, 1);
 
-        updateListOrder(container, list2change);
+            // Reassign data indices to remaining elements
+            const remainingElements = [...container.querySelectorAll('.draggable')];
+            remainingElements.forEach((el, newIndex) => {
+                el.dataset.index = newIndex;
+            });
+
+            // Trigger reflow and apply the transform
+            for (let newIndex = idx; newIndex < remainingElements.length; newIndex++) {
+                const el = remainingElements[newIndex];
+                smoothMoveElement(el, el.offsetHeight);
+            }
+            const addBtn = document.getElementById('add-basic-timer');
+            smoothMoveElement(addBtn, remainingElements[0].offsetHeight);
+            
+            updateListOrder(container, list2change);
+        }, 500);
     }
 }

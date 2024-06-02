@@ -38,22 +38,18 @@ function setBasicTimerDuration(event, index) {
     selectedIntervalTimer.intervals[index].duration = parseInt(event.target.value);
 }
 
-function removeTimer(index) {
+function removeTimer(timerDiv) {
     if (selectedIntervalTimer.intervals.length <= 1) {
         alert('The interval timer must consist of at least one basic timer.');
         return;
     }
-    // console.log("selectedTimer before splicing: " + JSON.stringify(window.selectedIntervalTimer));
-    // selectedIntervalTimer.intervals.splice(index, 1);
-    console.log("selectedTimer before deleting draggable element: " + JSON.stringify(window.selectedIntervalTimer));
-    deleteDraggableElement(document.getElementById('timers-container'), selectedIntervalTimer.intervals, index);
-    console.log("selectedTimer after deleting draggable element: " + JSON.stringify(window.selectedIntervalTimer));
-
-
-    // initializeEditPage();           // TODO: there might be a better solution...
+    deleteDraggableElement(document.getElementById('timers-container'),
+        window.selectedIntervalTimer.intervals,
+        timerDiv);
 }
 
-function setRmBtnFunctionality(rmBtn, index) {
+
+function setRmBtnFunctionality(rmBtn) {
     rmBtn.addEventListener('mouseover', () => {
         rmBtn.textContent = 'remove_circle';
     });
@@ -61,7 +57,7 @@ function setRmBtnFunctionality(rmBtn, index) {
         rmBtn.textContent = 'remove_circle_outline';
     });
     rmBtn.addEventListener('click', () => {
-        removeTimer(index);
+        removeTimer(rmBtn.parentElement);
     });
 }
 
@@ -81,7 +77,7 @@ function addTimerElement(basicTimersContainer, timer, index) {
     `;
 
     let rmBtn = timerDiv.querySelector('.remove-btn');
-    setRmBtnFunctionality(rmBtn, index);
+    setRmBtnFunctionality(rmBtn);
 
     setDraggableElement(basicTimersContainer, timerDiv, selectedIntervalTimer.intervals);
     basicTimersContainer.appendChild(timerDiv, index);
