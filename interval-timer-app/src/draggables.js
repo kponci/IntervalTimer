@@ -1,16 +1,6 @@
-export default function setDraggables(container, draggables, list2change) {
-    draggables.forEach(draggable => {
-        draggable.addEventListener('dragstart', () => {
-            draggable.classList.add('dragging');
-        })
-
-        draggable.addEventListener('dragend', () => {
-            draggable.classList.remove('dragging');
-            updateListOrder(container, list2change);
-        })
-    })
-
+export function setDraggableCanvas(container) {
     container.addEventListener('dragover', e => {
+        console.log("dragover")
         e.preventDefault();
         const afterElement = getDragAfterElement(container, e.clientY);
         const draggable = document.querySelector('.dragging');
@@ -19,6 +9,24 @@ export default function setDraggables(container, draggables, list2change) {
         } else {
             container.insertBefore(draggable, afterElement);
         }
+    });
+}
+
+export function setDraggableElement(container, element, list2change) {
+    // element MUST contain button with class drag-btn
+
+    const dragButton = element.querySelector('.drag-btn');
+    dragButton.addEventListener('dragstart', (event) => {
+        event.dataTransfer.setData("plain/text", element);
+        // event.preventDefault();
+        console.log("dragstart");
+        element.classList.add('dragging');
+    });
+
+    dragButton.addEventListener('dragend', () => {
+        console.log("dragend");
+        element.classList.remove('dragging');
+        updateListOrder(container, list2change);
     });
 }
 

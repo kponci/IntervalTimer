@@ -1,4 +1,4 @@
-import setDraggables, {deleteDraggableElement} from "./draggables.js";
+import { setDraggableCanvas, setDraggableElement, deleteDraggableElement } from "./draggables.js";
 
 export function initializeEditPage() {
     // change value in interval-name to the selectedIntervalTimer.name   
@@ -14,7 +14,7 @@ export function initializeEditPage() {
     }
 
     const draggables = document.querySelectorAll('.draggable');
-    setDraggables(basicTimersContainer, draggables, selectedIntervalTimer.intervals);
+    setDraggableCanvas(basicTimersContainer);
 
     const addBtn = document.getElementById('add-basic-timer');
     addBtn.addEventListener('mouseover', () => {
@@ -53,7 +53,7 @@ function removeTimer(index) {
     // initializeEditPage();           // TODO: there might be a better solution...
 }
 
-function setRmBtnFunctionality(rmBtn, index){
+function setRmBtnFunctionality(rmBtn, index) {
     rmBtn.addEventListener('mouseover', () => {
         rmBtn.textContent = 'remove_circle';
     });
@@ -67,21 +67,23 @@ function setRmBtnFunctionality(rmBtn, index){
 
 function addTimerElement(basicTimersContainer, timer, index) {
     const timerDiv = document.createElement('div');
-    timerDiv.className = 'draggable';
-    timerDiv.draggable = true;
+    timerDiv.className = 'basic-timer draggable';
+    // timerDiv.draggable = true;
     timerDiv.dataset.index = index;
-    
+
     timerDiv.innerHTML = `
       <label for="timer-name-${index}">Name:</label>
       <input type="text" id="timer-name-${index}" value="${timer.name}">
       <label for="timer-duration-${index}">Duration (seconds):</label>
       <input type="number" id="timer-duration-${index}" value="${timer.duration}">
       <button class="remove-btn material-icons">remove_circle_outline</button>
+      <button class="drag-btn material-icons" draggable="true">drag_handle</button>
     `;
 
     let rmBtn = timerDiv.querySelector('.remove-btn');
     setRmBtnFunctionality(rmBtn, index);
 
+    setDraggableElement(basicTimersContainer, timerDiv, selectedIntervalTimer.intervals);
     basicTimersContainer.appendChild(timerDiv, index);
 }
 

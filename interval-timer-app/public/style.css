@@ -107,19 +107,42 @@ body {
 /* EDIT page */
 #edit-tab {
     #timers-container {
-        background-color: #333;
         padding: 1rem;
-        margin-top: 1rem;
+        /* margin-top: 1rem; */
     }
     
-    .draggable {
+    .basic-timer {
         padding: 1rem;
+        margin: 1rem;
         background-color: white;
+        border-radius: 0.5rem;
         border: 1px solid black;
-        cursor: move;
+        display: flex;
+        justify-content: space-between;
+        transition: opacity 1s ease-out, transform 0.5s ease-in-out;
+    }
+
+    .fade-out {
+        opacity: 0;
+        pointer-events: none; /* Prevent interaction during the fade-out */
+    }
+
+    .drag-btn {
+        position: relative;
+        border-color: transparent;
+        background-color: transparent;
+        font-size: 25px;
+        cursor: grab;
+    }
+    .drag-btn:hover {
+        font-weight: bolder;
+    }
+
+    .basic-timer:is(:last-child) {
+        margin-bottom: 0;
     }
     
-    .draggable.dragging {
+    .basic-timer.dragging {
         opacity: .5;
     }
     
@@ -128,9 +151,7 @@ body {
         border-color: transparent;
         background-color: transparent;
         color: red;
-        font-size: 20px;
-        /* font-weight: bold; */
-        text-align: center;
+        font-size: 25px;
         cursor: pointer;
     }
     .add-btn {
@@ -138,9 +159,7 @@ body {
         border-color: transparent;
         background-color: transparent;
         color: green;
-        font-size: 20px;
-        /* font-weight: bold; */
-        text-align: center;
+        font-size: 25px;
         cursor: pointer;
     }
 }
