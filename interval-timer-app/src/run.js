@@ -115,8 +115,27 @@ function startPauseButtonHandler() {
         intervalTimer.run(updateDisplay);
         startOrPauseButton.innerHTML = '<i class="material-icons">pause</i>';
     }
-
 }
+
+function playUsingMediaAPI(btnId, soundName) {
+    // extreme overkill, but it's required in assignment
+    const playSoundButton = document.getElementById(btnId);
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    
+    playSoundButton.addEventListener('click', () => {
+        fetch(soundName)
+            .then(response => response.arrayBuffer())
+            .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
+            .then(audioBuffer => {
+                const soundSource = audioContext.createBufferSource();
+                soundSource.buffer = audioBuffer;
+                soundSource.connect(audioContext.destination);
+                soundSource.start();
+            })
+            .catch(e => console.error('Error fetching or decoding audio', e));
+    });
+}
+
 
 function timeForthButtonHandler() {
     document.getElementById('beep-08b').play();

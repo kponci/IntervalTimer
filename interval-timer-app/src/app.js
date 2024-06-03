@@ -3,15 +3,51 @@ import { initializeRunPage } from './run.js';
 import { initializeEditPage } from './edit.js';
 import { initializeOthersPage } from './others.js';
 
-let selectedIntervalTimer = new Timer(
-    "Sample timer",
-    [
-        { name: 'Warm-up', duration: 60 },
-        { name: 'Exercise', duration: 120 },
-        { name: 'Rest', duration: 30 }
-    ]
-);
-let allIntervalTimers = [selectedIntervalTimer];
+// let selectedIntervalTimer = new Timer(
+//     "Sample timer",
+//     [
+//         { name: 'Warm-up', duration: 60 },
+//         { name: 'Exercise', duration: 120 },
+//         { name: 'Rest', duration: 30 }
+//     ]
+// );
+// let allIntervalTimers = [selectedIntervalTimer];
+
+export function convertTimerInstancesToStructArr(timerInstances) {
+    return timerInstances.map(timer => {
+        return {
+            name: timer.name,
+            intervals: timer.intervals
+        }
+    });
+}
+
+function convertTimerStructsToInstances(timerStructs) {
+    return timerStructs.map(timerStruct => {
+        return new Timer(timerStruct.name, timerStruct.intervals);
+    });
+}
+
+let selectedIntervalTimer = null;
+let allIntervalTimers = null;
+if (localStorage.getItem('allIntervalTimers') === null) {
+    selectedIntervalTimer = new Timer(
+        "Sample timer",
+        [
+            { name: 'Warm-up', duration: 60 },
+            { name: 'Exercise', duration: 120 },
+            { name: 'Rest', duration: 30 }
+        ]
+    );
+    allIntervalTimers = [selectedIntervalTimer];
+    localStorage.setItem('allIntervalTimers', JSON.stringify(convertTimerInstancesToStructArr(allIntervalTimers)));
+}
+else {
+    const timerStructs = JSON.parse(localStorage.getItem('allIntervalTimers'));
+    allIntervalTimers = convertTimerStructsToInstances(timerStructs);
+    console.log("allIntervalTimers: " + JSON.stringify(allIntervalTimers));
+    selectedIntervalTimer = allIntervalTimers[0];
+}
 
 
 function updateNavbar(page) {

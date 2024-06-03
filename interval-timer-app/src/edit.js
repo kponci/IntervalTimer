@@ -1,4 +1,5 @@
 import { setDraggableCanvas, setDraggableElement, deleteDraggableElement } from "./draggables.js";
+import { convertTimerInstancesToStructArr } from "./app.js";
 
 export function initializeEditPage() {
     // change value in interval-name to the selectedIntervalTimer.name   
@@ -44,6 +45,7 @@ function removeTimer(timerDiv) {
     deleteDraggableElement(document.querySelector('.timers-container'),
         window.selectedIntervalTimer.intervals,
         timerDiv);
+    localStorage.setItem('allIntervalTimers', JSON.stringify(convertTimerInstancesToStructArr(allIntervalTimers)));
 }
 
 
@@ -110,6 +112,7 @@ function handleInputChange(event) {
 
         selectedIntervalTimer.intervals[index].duration = duration;
     }
+    localStorage.setItem('allIntervalTimers', JSON.stringify(convertTimerInstancesToStructArr(allIntervalTimers)));
 }
 
 function unfocusOnEnter(event) {
@@ -154,6 +157,7 @@ function addTimerElement(basicTimersContainer, timer, index) {
 
     setDraggableElement(basicTimersContainer, timerDiv, selectedIntervalTimer.intervals);
     basicTimersContainer.appendChild(timerDiv, index);
+    localStorage.setItem('allIntervalTimers', JSON.stringify(convertTimerInstancesToStructArr(allIntervalTimers)));
 }
 
 window.initializeEditPage = initializeEditPage;

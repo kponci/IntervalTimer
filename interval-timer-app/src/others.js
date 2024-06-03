@@ -1,5 +1,6 @@
 import { setDraggableCanvas, setDraggableElement, deleteDraggableElement } from "./draggables.js";
 import { Timer } from './timer.js';
+import { convertTimerInstancesToStructArr } from './app.js';
 
 export function initializeOthersPage() {
     const intervalTimersContainer = document.querySelector('.timers-container');
@@ -24,6 +25,7 @@ export function initializeOthersPage() {
         const newInstantiatedInterval = new Timer('New Interval Timer', [basicTimerStruct]);
         allIntervalTimers.push(newInstantiatedInterval);
         addTimerElement(intervalTimersContainer, newInstantiatedInterval, allIntervalTimers.length - 1);
+        localStorage.setItem('allIntervalTimers', JSON.stringify(convertTimerInstancesToStructArr(allIntervalTimers)));
         setFocusToIntervalTimer(allIntervalTimers.length - 1);
     });
 }
