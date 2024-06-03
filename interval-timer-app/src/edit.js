@@ -2,13 +2,17 @@ import { setDraggableCanvas, setDraggableElement, deleteDraggableElement } from 
 
 export function initializeEditPage() {
     // change value in interval-name to the selectedIntervalTimer.name   
-    document.getElementById('interval-name').value = selectedIntervalTimer.name;
+    if (selectedIntervalTimer == null){
+        alert("No interval timer selected");
+        // return;
+        selectedIntervalTimer = window.allIntervalTimers[0];
+    }
+    document.getElementById('interval-name').value = window.selectedIntervalTimer.name;
     document.getElementById('interval-name').addEventListener('change', handleInputChange);
 
     const basicTimersContainer = document.querySelector('.timers-container');
     basicTimersContainer.innerHTML = ''; // Clear any existing content
 
-    console.log("selectedIntervalTimer.intervals: " + selectedIntervalTimer.intervals);
     for (let i = 0; i < selectedIntervalTimer.intervals.length; i++) {
         const basicTimerStruct = selectedIntervalTimer.intervals[i];
         addTimerElement(basicTimersContainer, basicTimerStruct, i);

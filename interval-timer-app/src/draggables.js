@@ -1,6 +1,5 @@
 export function setDraggableCanvas(container) {
     container.addEventListener('dragover', e => {
-        console.log("dragover")
         e.preventDefault();
         const afterElement = getDragAfterElement(container, e.clientY);
         const draggable = document.querySelector('.dragging');
@@ -16,7 +15,6 @@ export function setDraggableElement(container, element, list2change) {
     // element MUST contain button with class drag-btn
     const dragButton = element.querySelector('.drag-btn');
     dragButton.addEventListener('dragstart', (event) => {
-        console.log("element.outerHTML: " + element.outerHTML);
         element.classList.add('dragging');
         const rect = element.getBoundingClientRect();
         const offsetX = event.clientX - rect.left;
@@ -25,7 +23,6 @@ export function setDraggableElement(container, element, list2change) {
     });
 
     dragButton.addEventListener('dragend', () => {
-        console.log("dragend");
         element.classList.remove('dragging');
         updateListOrder(container, list2change);
     });

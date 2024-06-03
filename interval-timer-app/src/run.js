@@ -1,14 +1,12 @@
-// src/run.js
-
 function getTimerWithDisplay() {
     const intervalTimer = window.selectedIntervalTimer;
     const timerDisplay = document.getElementById('run-timer-details');
     if (timerDisplay == null) {
-        console.log("ERROR: Timer display not found")
+        alert("ERROR: Timer display not found")
         return [null, null];
     }
     if (intervalTimer == null) {
-        console.log("ERROR: Timer not found")
+        alert("ERROR: Timer not found")
         return [null, null];
     }
     return [intervalTimer, timerDisplay];
@@ -148,7 +146,6 @@ function resetButtonHandler() {
 }
 
 export function initializeRunPage() {
-    console.log("selectedTimer: " + JSON.stringify(window.selectedIntervalTimer));
 
     updateDisplay(); // Initial display update
     document.getElementById('startPauseButton').addEventListener('click', startPauseButtonHandler);
