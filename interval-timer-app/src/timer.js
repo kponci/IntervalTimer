@@ -18,9 +18,15 @@ export class Timer {
                 this.elapsed += 1;
                 updateDisplayCallback(this);
                 console.log("this.elapsed: " + this.elapsed);
+                if(this.getCurrentInterval().duration - this.elapsed <= 3){
+                    const sound2 = document.getElementById('beep-07a');
+                    sound2.play();
+                }
             } else {
                 console.log("switching to next interval");
                 this.nextInterval(updateDisplayCallback);
+                const sound1 = document.getElementById('beep-04');
+                sound1.play();
             }
         }, 1000);
     }

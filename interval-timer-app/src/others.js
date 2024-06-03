@@ -29,10 +29,7 @@ export function initializeOthersPage() {
 }
 
 function setFocusToIntervalTimer(intervalTimerId) {
-    console.log("setFocusToIntervalTimer: " + intervalTimerId);
-    console.log("selectedIntervalTimer before: " + JSON.stringify(window.selectedIntervalTimer));
     window.selectedIntervalTimer = window.allIntervalTimers[intervalTimerId];
-    console.log("selectedIntervalTimer after: " + JSON.stringify(window.selectedIntervalTimer));
     window.showPage('edit');
 }
 
@@ -45,7 +42,6 @@ function removeTimer(timerDiv) {
         allIntervalTimers,
         timerDiv);
     window.selectedIntervalTimer = window.allIntervalTimers[0];
-    console.log("TIMER REMOVED");
 }
 
 function setRmBtnFunctionality(rmBtn) {
@@ -74,7 +70,6 @@ function addTimerElement(intervalTimersContainer, intervalTimerObject, index) {
     timerDiv.className = 'timer-div interval draggable';
     timerDiv.dataset.index = index;
 
-    console.log("index: " + index + "; intervalTimerObject: " + JSON.stringify(intervalTimerObject));
     const totalTime = getIntervalTimerTotalTime(intervalTimerObject);
     const totalMinutes = Math.floor(totalTime / 60);
     const totalSeconds = totalTime % 60;
@@ -96,7 +91,6 @@ function addTimerElement(intervalTimersContainer, intervalTimerObject, index) {
 
     setDraggableElement(intervalTimersContainer, timerDiv, allIntervalTimers);
     timerDiv.addEventListener('click', () => {
-        console.log("timerDiv clicked: " + timerDiv.dataset.index);
         setFocusToIntervalTimer(Array.prototype.indexOf.call(intervalTimersContainer.children, timerDiv));
     });
     intervalTimersContainer.appendChild(timerDiv, index);
