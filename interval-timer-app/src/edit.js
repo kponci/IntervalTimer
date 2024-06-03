@@ -5,7 +5,6 @@ export function initializeEditPage() {
     // change value in interval-name to the selectedIntervalTimer.name   
     if (selectedIntervalTimer == null){
         alert("No interval timer selected");
-        // return;
         selectedIntervalTimer = window.allIntervalTimers[0];
     }
     document.getElementById('interval-name').value = window.selectedIntervalTimer.name;
@@ -19,9 +18,7 @@ export function initializeEditPage() {
         addTimerElement(basicTimersContainer, basicTimerStruct, i);
     }
 
-    // const draggables = document.querySelectorAll('.draggable');
     setDraggableCanvas(basicTimersContainer);
-    // basicTimersContainer.addEventListener("input", handleInputChange);
 
     const addBtn = document.querySelector('.add-btn');
     addBtn.addEventListener('mouseover', () => {
@@ -132,11 +129,11 @@ function addTimerElement(basicTimersContainer, timer, index) {
 
     timerDiv.innerHTML = `
     <div>
-        <label>Name:</label>
-        <input type="text" placeholder="Sample basic timer" value="${timer.name}">
+        <label class="narrow-removable">Name:</label>
+        <input class="narrow-shrinkable timer-name-input" type="text" placeholder="Sample basic timer" value="${timer.name}">
     </div>
     <div>
-        <label>Time:</label>
+        <label class="narrow-removable">Time:</label>
         <input class="time-input mins" type="number" value="${minutes}" min="0" max="59" placeholder="10">m
         :
         <input class="time-input secs" type="number" value="${seconds}" min="0" max="59" placeholder="10">s

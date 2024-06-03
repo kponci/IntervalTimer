@@ -7,6 +7,8 @@ body {
     height: 100vh;
     margin: 0;
     background-color: #ccc;
+    min-width: 500px;
+    min-height: 700px;
 }
 
 .navbar {
@@ -74,6 +76,8 @@ body {
         right: 1vw;
         bottom: 1vw;
         display: flex;
+        /* max-width: 1600px; */
+
 
         button {
             /* button.run { */
@@ -176,7 +180,8 @@ body {
     justify-content: space-between;
     transition: opacity 1s ease-out, transform 0.5s ease-in-out;
 }
-.timer-div.interval:hover{
+
+.timer-div.interval:hover {
     border-width: 3px;
 }
 
@@ -241,7 +246,54 @@ body {
 input {
     font-size: 25px;
 }
+
 .time-input {
-    width: 3.2ch; 
-    text-align: center; 
+    width: 3.2ch;
+    text-align: center;
+}
+
+#others-tab .timer-name {
+    width: 25ch;
+}
+
+#edit-tab .timer-name-input {
+    width: 13ch;
+}
+
+@media (max-width: 750px) {
+    #others-tab .timer-name {
+        width: auto;
+    }
+
+    .timer-div {
+        padding-left: 0;
+        padding-right: 0;
+
+        margin-left: 0;
+        margin-right: 0;
+        justify-content: flex-end;
+    }
+
+    .timer-div> :first-child {
+        margin-right: auto;
+    }
+
+    .timers-container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+@media (max-width: 650px) {
+    .narrow-removable {
+        display: none;
+    }
+}
+
+@media (max-height: 1000px) {
+
+    .timer-info.non-existent,
+    .timer-info.minor {
+        display: none;
+    }
 }

@@ -81,8 +81,8 @@ function addTimerElement(intervalTimersContainer, intervalTimerObject, index) {
     const intervalName = intervalTimerObject.name;
     
     timerDiv.innerHTML = `
-    <label style="width: 25ch; text-align: left"><b>Name:</b>${intervalName}</label>
-    <label><b>Time:</b> ${totalMinutesStr}:${totalSecondsStr}</label>
+    <label class="timer-name narrow-shrinkable"><b class="narrow-removable">Name:</b>${intervalName}</label>
+    <label><b class="narrow-removable">Time:</b> ${totalMinutesStr}:${totalSecondsStr}</label>
     <div>
         <button class="remove-btn material-icons">remove_circle_outline</button>
         <button class="drag-btn material-icons" draggable="true">drag_handle</button>

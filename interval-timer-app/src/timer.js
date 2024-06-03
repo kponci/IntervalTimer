@@ -9,7 +9,6 @@ export class Timer {
 
     // run tab helper functions
     run(updateDisplayCallback) {
-        console.log("run called");
         if (this.isFinished()){
             return;
         }
@@ -18,16 +17,13 @@ export class Timer {
             return;
         }
         this.interval = setInterval(() => {
-            console.log("elapsed: " + this.elapsed);
             if (this.elapsed < this.getCurrentInterval().duration-1) {
                 this.elapsed += 1;
                 updateDisplayCallback(this);
-                console.log("this.elapsed: " + this.elapsed);
                 if(this.getCurrentInterval().duration - this.elapsed <= 3){
                     document.getElementById('beep-07a').play();
                 }
             } else {
-                console.log("switching to next interval");
                 this.nextInterval(updateDisplayCallback);
                 if (this.isFinished()){
                     document.getElementById('beep-11').play();
@@ -40,7 +36,6 @@ export class Timer {
     }
 
     isRunning(){
-        console.log("this.interval: " + this.interval)
         return this.interval !== null;
     }
 
@@ -49,7 +44,6 @@ export class Timer {
     }
 
     pause() {
-        console.log("pause called");
         clearInterval(this.interval);
         this.interval = null;
     }
@@ -74,9 +68,6 @@ export class Timer {
     }
 
     getNextIntervalName() {
-        console.log("this.currentIntervalIndex: " + this.currentIntervalIndex);
-        console.log("this.intervals.length: " + this.intervals.length);
-        console.log("this.intervals[currentIntervalIndex]: " + this.intervals[this.currentIntervalIndex].name);
         if (this.currentIntervalIndex < this.intervals.length - 1) {
             return this.intervals[this.currentIntervalIndex + 1].name;
         } else {
@@ -156,11 +147,7 @@ export class Timer {
 
     // edit tab helper functions
     addBasicTimer(basicTimer) {
-
-    console.log("selectedTimer before push: " + JSON.stringify(window.selectedIntervalTimer));
         this.intervals.push(basicTimer);
-
-    console.log("selectedTimer after push: " + JSON.stringify(window.selectedIntervalTimer));
     }
 
     moveBasicTimer(from, to){

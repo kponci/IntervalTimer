@@ -3,16 +3,6 @@ import { initializeRunPage } from './run.js';
 import { initializeEditPage } from './edit.js';
 import { initializeOthersPage } from './others.js';
 
-// let selectedIntervalTimer = new Timer(
-//     "Sample timer",
-//     [
-//         { name: 'Warm-up', duration: 60 },
-//         { name: 'Exercise', duration: 120 },
-//         { name: 'Rest', duration: 30 }
-//     ]
-// );
-// let allIntervalTimers = [selectedIntervalTimer];
-
 export function convertTimerInstancesToStructArr(timerInstances) {
     return timerInstances.map(timer => {
         return {
