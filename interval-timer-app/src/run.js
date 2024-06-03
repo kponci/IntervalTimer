@@ -104,6 +104,7 @@ function updateDisplay() {
 }
 
 function startPauseButtonHandler() {
+    document.getElementById('beep-08b').play();
     const [intervalTimer, timerDisplay] = getTimerWithDisplay();
     const startOrPauseButton = document.getElementById('startPauseButton');
     if (intervalTimer.isRunning()) {
@@ -113,33 +114,39 @@ function startPauseButtonHandler() {
         intervalTimer.run(updateDisplay);
         startOrPauseButton.innerHTML = '<i class="material-icons">pause</i>';
     }
+
 }
 
 function timeForthButtonHandler() {
+    document.getElementById('beep-08b').play();
     const [intervalTimer, timerDisplay] = getTimerWithDisplay();
     intervalTimer.timeForward(10);
     updateDisplay();
 }
 
 function timeBackButtonHandler() {
+    document.getElementById('beep-08b').play();
     const [intervalTimer, timerDisplay] = getTimerWithDisplay();
     intervalTimer.timeBackward(10);
     updateDisplay();
 }
 
 function intervalForthButtonHandler() {
+    document.getElementById('beep-08b').play();
     const [intervalTimer, timerDisplay] = getTimerWithDisplay();
     intervalTimer.intervalForward();
     updateDisplay();
 }
 
 function intervalBackButtonHandler() {
+    document.getElementById('beep-08b').play();
     const [intervalTimer, timerDisplay] = getTimerWithDisplay();
     intervalTimer.intervalBackward();
     updateDisplay();
 }
 
 function resetButtonHandler() {
+    document.getElementById('beep-08b').play();
     const [intervalTimer, timerDisplay] = getTimerWithDisplay();
     intervalTimer.reset();
     updateDisplay();

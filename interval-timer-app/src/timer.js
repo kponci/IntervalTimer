@@ -19,14 +19,12 @@ export class Timer {
                 updateDisplayCallback(this);
                 console.log("this.elapsed: " + this.elapsed);
                 if(this.getCurrentInterval().duration - this.elapsed <= 3){
-                    const sound2 = document.getElementById('beep-07a');
-                    sound2.play();
+                    document.getElementById('beep-07a').play();
                 }
             } else {
                 console.log("switching to next interval");
                 this.nextInterval(updateDisplayCallback);
-                const sound1 = document.getElementById('beep-04');
-                sound1.play();
+                document.getElementById('beep-04').play();
             }
         }, 1000);
     }
