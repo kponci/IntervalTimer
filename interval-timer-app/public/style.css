@@ -177,6 +177,19 @@ body {
     transition: opacity 1s ease-out, transform 0.5s ease-in-out;
 }
 
+.interval-timer-container {
+    padding: 1rem;
+    margin: 1rem;
+    background-color: white;
+    font-weight: bold;
+    border-radius: 0.5rem;
+    border: 3px solid black;
+    background-color: #ded;
+    width: fit-content;
+    margin: 0 auto;
+    transition: opacity 1s ease-out, transform 0.5s ease-in-out;
+}
+
 .fade-out {
     opacity: 0;
     pointer-events: none;
