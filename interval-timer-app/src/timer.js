@@ -9,11 +9,16 @@ export class Timer {
 
     // run tab helper functions
     run(updateDisplayCallback) {
+        console.log("run called");
+        if (this.isFinished()){
+            return;
+        }
         if (this.isRunning()) {
             console.log("ERROR: Timer is already running. Stop it first.");
             return;
         }
         this.interval = setInterval(() => {
+            console.log("elapsed: " + this.elapsed);
             if (this.elapsed < this.getCurrentInterval().duration-1) {
                 this.elapsed += 1;
                 updateDisplayCallback(this);
@@ -24,20 +29,27 @@ export class Timer {
             } else {
                 console.log("switching to next interval");
                 this.nextInterval(updateDisplayCallback);
-                document.getElementById('beep-04').play();
+                if (this.isFinished()){
+                    document.getElementById('beep-11').play();
+                }
+                else{
+                    document.getElementById('beep-04').play();
+                }
             }
         }, 1000);
     }
 
     isRunning(){
+        console.log("this.interval: " + this.interval)
         return this.interval !== null;
     }
 
     isFinished(){
-        return this.currentIntervalIndex === this.intervals.length - 1 && this.elapsed === this.getCurrentInterval().duration;
+        return this.currentIntervalIndex === this.intervals.length - 1 && this.elapsed >= this.getCurrentInterval().duration-1;
     }
 
     pause() {
+        console.log("pause called");
         clearInterval(this.interval);
         this.interval = null;
     }
@@ -51,6 +63,8 @@ export class Timer {
 
     nextInterval(updateDisplayCallback) {
         if (this.isFinished()) {
+            this.elapsed += 1;
+            updateDisplayCallback(this);
             this.pause();
         } else {
             this.currentIntervalIndex += 1;
@@ -100,7 +114,7 @@ export class Timer {
 
     timeForward(seconds) {
         const currentInterval = this.getCurrentInterval();
-        if (this.elapsed + seconds >= currentInterval.duration) {
+        if (this.elapsed + seconds >= currentInterval.duration-1) {
             if (this.currentIntervalIndex < this.intervals.length - 1) {
                 this.elapsed = this.elapsed + seconds - currentInterval.duration;
                 this.currentIntervalIndex += 1;

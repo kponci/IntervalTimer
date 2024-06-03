@@ -93,6 +93,7 @@ function updateDisplay() {
     const [intervalTimer, timerDisplay] = getTimerWithDisplay();
     const currentInterval = intervalTimer.getCurrentInterval();
     const remaining = currentInterval.duration - intervalTimer.elapsed;
+    console.log("intervalTimer: " + JSON.stringify(intervalTimer));
 
     const prevTimerDiv = showBasicTimerStats(intervalTimer.currentIntervalIndex - 1, true);
     const currTimerDiv = showBasicTimerStats(intervalTimer.currentIntervalIndex, false);
