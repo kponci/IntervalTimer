@@ -166,7 +166,7 @@ body {
     /* margin-top: 1rem; */
 }
 
-.basic-timer {
+.timer-div {
     padding: 1rem;
     margin: 1rem;
     background-color: white;
@@ -175,6 +175,9 @@ body {
     display: flex;
     justify-content: space-between;
     transition: opacity 1s ease-out, transform 0.5s ease-in-out;
+}
+.timer-div.interval:hover{
+    border-width: 3px;
 }
 
 .interval-timer-container {
@@ -208,11 +211,11 @@ body {
     font-weight: bolder;
 }
 
-.basic-timer:is(:last-child) {
+.timer-div:is(:last-child) {
     margin-bottom: 0;
 }
 
-.basic-timer.dragging {
+.timer-div.dragging {
     opacity: .5;
 }
 

@@ -35,7 +35,7 @@ function showPage(page) {
             const scriptEl = document.createRange().createContextualFragment(html);
             content.append(scriptEl)
             // content.innerHTML = html;
-            // Dynamically load and execute run.js
+            // Dynamically load and execute corresponding script
             if (page === 'run') {
                 initializeRunPage();
             }

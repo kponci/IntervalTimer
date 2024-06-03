@@ -69,14 +69,14 @@ function handleInputChange(event) {
         if (srcElement.id === 'interval-name') {
             selectedIntervalTimer.name = event.target.value;
         } else {
-            const index = event.target.closest('.basic-timer').dataset.index;
+            const index = event.target.closest('.timer-div').dataset.index;
             selectedIntervalTimer.intervals[index].name = event.target.value;
         }
     }
     else {                                  // time of a basic timer
-        const index = srcElement.closest('.basic-timer').dataset.index;
-        const minutesField = srcElement.closest('.basic-timer').querySelector('.mins');
-        const secondsField = srcElement.closest('.basic-timer').querySelector('.secs');
+        const index = srcElement.closest('.timer-div').dataset.index;
+        const minutesField = srcElement.closest('.timer-div').querySelector('.mins');
+        const secondsField = srcElement.closest('.timer-div').querySelector('.secs');
 
         // check if input is a valid number
         if (event.target.value.length == 0){
@@ -116,7 +116,7 @@ function unfocusOnEnter(event) {
 
 function addTimerElement(basicTimersContainer, timer, index) {
     const timerDiv = document.createElement('div');
-    timerDiv.className = 'basic-timer draggable';
+    timerDiv.className = 'timer-div draggable';
     // timerDiv.draggable = true;
     timerDiv.dataset.index = index;
 
