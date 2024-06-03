@@ -81,15 +81,12 @@ function showIntervalTimerStats() {
     const totalElapsed = intervalTimer.getTotalElapsed();
     const totalTime = totalRemaining + totalElapsed;
 
-    // const progressBarWithPercentage = createProgressBar(totalElapsed, totalTime).outerHTML};
-    // const percentage = `<div>${Math.floor(totalElapsed / totalTime * 100)}%</div>`;
-
-
     return `<div class="timer-info interval">
+        <h1>${intervalTimer.name}</h1>
         ${addInfo("Total Remaining", formatTime(totalRemaining))}
         ${addInfo("Total Elapsed", formatTime(totalElapsed))}
         ${addInfo("Total Duration", formatTime(totalTime))}
-        ${addInfo("Percentage", `${Math.floor(totalElapsed / totalTime * 100)}%`)}
+        ${addInfo("Progress", `${Math.floor(totalElapsed / totalTime * 100)}%`)}
         ${createProgressBar(totalElapsed, totalTime).outerHTML}
       </div>`;
 }
@@ -105,11 +102,7 @@ function updateDisplay() {
 
     const intervalTimerDiv = showIntervalTimerStats();
 
-    timerDisplay.innerHTML = `<h1>${intervalTimer.name}</h1>`
-        + prevTimerDiv
-        + currTimerDiv
-        + nextTimerDiv
-        + intervalTimerDiv;
+    timerDisplay.innerHTML = intervalTimerDiv + prevTimerDiv + currTimerDiv + nextTimerDiv;
 }
 
 function startPauseButtonHandler() {

@@ -143,7 +143,11 @@ body {
         font-weight: bold;
         border: 3px solid greenyellow;
         transform-origin: center;
-        margin-top: 1rem;
+        margin: 1rem 0 1rem 0;
+    }
+
+    h1 {
+        margin: 0;
     }
 
     .info-elem {
@@ -218,4 +222,10 @@ body {
     transition: transform 0.5s ease-in-out;
 }
 
-/* } */
+input {
+    font-size: 25px;
+}
+.time-input {
+    width: 3.2ch; 
+    text-align: center; 
+}

@@ -3,6 +3,7 @@ import { setDraggableCanvas, setDraggableElement, deleteDraggableElement } from 
 export function initializeEditPage() {
     // change value in interval-name to the selectedIntervalTimer.name   
     document.getElementById('interval-name').value = selectedIntervalTimer.name;
+    document.getElementById('interval-name').addEventListener('change', handleInputChange);
 
     const basicTimersContainer = document.querySelector('.timers-container');
     basicTimersContainer.innerHTML = ''; // Clear any existing content
@@ -15,6 +16,7 @@ export function initializeEditPage() {
 
     // const draggables = document.querySelectorAll('.draggable');
     setDraggableCanvas(basicTimersContainer);
+    // basicTimersContainer.addEventListener("input", handleInputChange);
 
     const addBtn = document.querySelector('.add-btn');
     addBtn.addEventListener('mouseover', () => {
@@ -28,14 +30,6 @@ export function initializeEditPage() {
         selectedIntervalTimer.addBasicTimer(basicTimerStruct);
         addTimerElement(basicTimersContainer, basicTimerStruct, selectedIntervalTimer.intervals.length - 1);
     });
-}
-
-function setBasicTimerName(event, index) {
-    selectedIntervalTimer.intervals[index].name = event.target.value;
-}
-
-function setBasicTimerDuration(event, index) {
-    selectedIntervalTimer.intervals[index].duration = parseInt(event.target.value);
 }
 
 function removeTimer(timerDiv) {
@@ -57,8 +51,67 @@ function setRmBtnFunctionality(rmBtn) {
         rmBtn.textContent = 'remove_circle_outline';
     });
     rmBtn.addEventListener('click', () => {
-        removeTimer(rmBtn.parentElement);
+        removeTimer(rmBtn.parentElement.parentElement);
     });
+}
+
+function handleInputChange(event) {
+    const srcElement = event.srcElement;
+    if (srcElement.type === 'text') {       // name of the interval timer or name of a basic timer 
+        if (event.target.value.length == 0){
+            alert("Name cannot be empty");
+            return;
+        }
+        if (event.target.value.length > 20){
+            alert("Name cannot be longer than 20 characters");
+            return;
+        }
+        if (srcElement.id === 'interval-name') {
+            selectedIntervalTimer.name = event.target.value;
+        } else {
+            const index = event.target.closest('.basic-timer').dataset.index;
+            selectedIntervalTimer.intervals[index].name = event.target.value;
+        }
+    }
+    else {                                  // time of a basic timer
+        const index = srcElement.closest('.basic-timer').dataset.index;
+        const minutesField = srcElement.closest('.basic-timer').querySelector('.mins');
+        const secondsField = srcElement.closest('.basic-timer').querySelector('.secs');
+
+        // check if input is a valid number
+        if (event.target.value.length == 0){
+            event.target.value = "0";
+        }
+        const integerValue = parseInt(event.target.value);
+        if (isNaN(integerValue) || integerValue < 0 || integerValue > 59){
+            alert("Please enter a valid number between 0 and 59");
+            event.target.value = 0;
+            if (minutesField == 0 && secondsField < 3){
+                secondsField.value = 3;
+            }
+        }
+        
+        let duration = parseInt(minutesField.value, 10) * 60 + parseInt(secondsField.value, 10);
+        if (duration < 3) {
+            alert("Duration must be at least 3 seconds");
+            minutesField.value = 0;
+            secondsField.value = 3;
+            duration = 3;
+        }
+
+        if(!isNaN(integerValue)){
+            // remove trailing zeros
+            event.target.value = integerValue;
+        }
+
+        selectedIntervalTimer.intervals[index].duration = duration;
+    }
+}
+
+function unfocusOnEnter(event) {
+    if (event.key === 'Enter') {
+        event.target.blur();
+    }
 }
 
 function addTimerElement(basicTimersContainer, timer, index) {
@@ -67,14 +120,30 @@ function addTimerElement(basicTimersContainer, timer, index) {
     // timerDiv.draggable = true;
     timerDiv.dataset.index = index;
 
+    const minutes = Math.floor(timer.duration / 60);
+    const seconds = timer.duration % 60;
+
     timerDiv.innerHTML = `
-      <label for="timer-name-${index}">Name:</label>
-      <input type="text" id="timer-name-${index}" value="${timer.name}">
-      <label for="timer-duration-${index}">Duration (seconds):</label>
-      <input type="number" id="timer-duration-${index}" value="${timer.duration}">
-      <button class="remove-btn material-icons">remove_circle_outline</button>
-      <button class="drag-btn material-icons" draggable="true">drag_handle</button>
-    `;
+    <div>
+        <label>Name:</label>
+        <input type="text" placeholder="Sample basic timer" value="${timer.name}">
+    </div>
+    <div>
+        <label>Time:</label>
+        <input class="time-input mins" type="number" value="${minutes}" min="0" max="59" placeholder="10">m
+        :
+        <input class="time-input secs" type="number" value="${seconds}" min="0" max="59" placeholder="10">s
+    </div>
+    <div>
+        <button class="remove-btn material-icons">remove_circle_outline</button>
+        <button class="drag-btn material-icons" draggable="true">drag_handle</button>
+    </div>`;
+
+    ['input[type="text"]', '.time-input.mins', '.time-input.secs'].forEach(selector => {
+        let inputEl = timerDiv.querySelector(selector);
+        inputEl.addEventListener('input', handleInputChange);
+        inputEl.addEventListener('keydown', unfocusOnEnter);
+    });
 
     let rmBtn = timerDiv.querySelector('.remove-btn');
     setRmBtnFunctionality(rmBtn);

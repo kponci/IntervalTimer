@@ -14,7 +14,7 @@ export class Timer {
             return;
         }
         this.interval = setInterval(() => {
-            if (this.elapsed < this.getCurrentInterval().duration) {
+            if (this.elapsed < this.getCurrentInterval().duration-1) {
                 this.elapsed += 1;
                 updateDisplayCallback(this);
                 console.log("this.elapsed: " + this.elapsed);
