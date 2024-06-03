@@ -71,23 +71,24 @@ body {
     }
 
     #button-container {
-        position: fixed;
+        position: absolute;
         left: 1vw;
         right: 1vw;
         bottom: 1vw;
         display: flex;
-        /* max-width: 1600px; */
-
+        max-width: 1200px;
+        /* max-height: 100px; */        /* This was not working for some reason */
+        margin: 0 auto;
 
         button {
-            /* button.run { */
             flex: 1;
             padding: 3vw;
             border: 2px solid black;
             background-color: white;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 25px;      
             transition: background-color 0.1s ease;
+            /* max-height: 100px; */    /* This was not working for some reason */
         }
 
         button:hover {
